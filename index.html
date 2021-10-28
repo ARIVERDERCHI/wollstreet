@@ -2,6 +2,10 @@
 <!-- saved from url=(0035)https://worldwidewoll.w3spaces.com/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>W3.CSS Template</title>
 
+<script src="p5.dom.min.js"></script>
+<script src="p5.min.js"></script>
+<script src="sketch.js"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="./index_files/w3.css">
 <link rel="stylesheet" href="./index_files/css">
@@ -20,11 +24,11 @@ body {font-size:16px;}
     <h3 class="w3-padding-64"><b>Company<br>Name</b></h3>
   </div>
   <div class="w3-bar-block">
-    <a href="https://worldwidewoll.w3spaces.com/#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
-    <a href="https://worldwidewoll.w3spaces.com/#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a> 
-    <a href="https://worldwidewoll.w3spaces.com/#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a> 
-    <a href="https://worldwidewoll.w3spaces.com/#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a> 
-    <a href="https://worldwidewoll.w3spaces.com/#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a> 
+    <a href="https://worldwidewoll.w3spaces.com/#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+    <a href="https://worldwidewoll.w3spaces.com/#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a>
+    <a href="https://worldwidewoll.w3spaces.com/#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a>
+    <a href="https://worldwidewoll.w3spaces.com/#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
+    <a href="https://worldwidewoll.w3spaces.com/#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a>
     <a href="https://worldwidewoll.w3spaces.com/#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
   </div>
 </nav>
@@ -47,7 +51,7 @@ body {font-size:16px;}
     <h1 class="w3-xxxlarge w3-text-red"><b>Showcase.</b></h1>
     <hr style="width:50px;border:5px solid red" class="w3-round">
   </div>
-  
+
   <!-- Photo grid (modal) -->
   <div class="w3-row-padding">
     <div class="w3-half">
@@ -82,7 +86,7 @@ body {font-size:16px;}
     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
   </div>
-  
+
   <!-- Designers -->
   <div class="w3-container" id="designers" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-red"><b>Designers.</b></h1>
@@ -154,7 +158,7 @@ body {font-size:16px;}
         </li>
       </ul>
     </div>
-        
+
     <div class="w3-half">
       <ul class="w3-ul w3-light-grey w3-center">
         <li class="w3-red w3-xlarge w3-padding-32">Pro</li>
@@ -173,7 +177,7 @@ body {font-size:16px;}
       </ul>
     </div>
   </div>
-  
+
   <!-- Contact -->
   <div class="w3-container" id="contact" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-red"><b>Contact.</b></h1>
@@ -193,7 +197,7 @@ body {font-size:16px;}
         <input class="w3-input w3-border" type="text" name="Message" required="">
       </div>
       <button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Send Message</button>
-    </form>  
+    </form>
   </div>
 
 <!-- End page content -->
@@ -208,7 +212,7 @@ function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
   document.getElementById("myOverlay").style.display = "block";
 }
- 
+
 function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("myOverlay").style.display = "none";
