@@ -10,7 +10,7 @@
 var drops = [];
 
 function setup() {
-  canvas = createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(500, 500);
   canvas.style('z-index', '-1');
   for (var i = 0; i < 500; i++) {
     drops[i] = new Drop();
