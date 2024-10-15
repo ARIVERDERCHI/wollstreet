@@ -1,135 +1,196 @@
-// save this file as sketch.js
-// Sketch One
-let s = function (p) { // p could be any variable name
+var gridWidthSlider, gridHeightSlider, gridSpacingSlider;
+var mouseCoord_bo = false; // init grid using sliders
 
-    let angle = 0;
-    let h = 0;
+var lockActive = false; // initially no lock
+var numbersActiveToggle = true;  // initially only squares
+var cnt = 0;
 
-    p.setup = function () {
-        p.createCanvas(300, 300);
+var rec_x_amnt = 10;
+var rec_y_amnt = 10;
+var spacing = 15;
 
-
-        p.background(255);
-    };
-
-    p.draw = function () {
-        p.background(255);
-
-        p.translate(p.width / 2, p.height / 2);
-        //p.rectMode(CENTER);
-
-        let offset = 0;
-
-        for (let y = (0 - p.height / 2); y < p.height; y += 50) {
-            for (let x = (0 - p.width / 2); x < p.width; x += 50) {
-
-                let a = angle + offset;
-                h = p.map(p.sin(a), -1, 1, 0, 100);
-
-                p.rect(x, y, 2, h);
+var heatMap;
 
 
-                offset += 0.1;
+function setup() {
 
-                p.stroke(0, 200, 10, h);
-                p.fill(h);
-            }
-        }
+  createCanvas(windowWidth, windowHeight);
+  colorMode(HSB);
+  textAlign(CENTER);
+  textStyle(BOLD);
+  // frameRate(1);
 
-        angle += 0.1;
+  gridWidthSlider = createSlider(0, windowWidth, windowWidth/2);
+  gridWidthSlider.position(20, 40);
+  gridHeightSlider = createSlider(0, windowHeight, windowHeight/2);
+  gridHeightSlider.position(20, 60);
+  gridSpacingSlider = createSlider(20, 100, 5);
+  gridSpacingSlider.position(20, 80);
 
-    }
-}
-
-let myp5 = new p5(s, "c1");
-
-
-
-// Sketch two
-let t = function (p) { // p could be any variable name
-
-    let angle = 0;
-    let h = 0;
+  genMapBtn  = createButton("Gen. Map");
+  genMapBtn.position(70, 5);
 
 
-
-    p.setup = function () {
-        p.createCanvas(300, 300);
-        p.background(0);
-    };
-
-    p.draw = function () {
+  genMapBtn.mousePressed(function() {
+    heatMap = new HeatMap(rec_x_amnt/spacing, rec_y_amnt/spacing);
+  });
 
 
-        p.translate(p.width / 2, p.height / 2);
-        //p.rectMode(CENTER);
+  // toggle mouse or sliders
+  mouseCoordButton  = createButton("Mouse.XY");
+  mouseCoordButton.position(175, 5);
+  mouseCoordButton.hide();
+  
+  mouseCoordButton.mousePressed(function() {
+    mouseCoordButton.hide();
+    sliderGridBtn.show();
+    mouseCoord_bo = false;
+  });
+  
+  sliderGridBtn = createButton("Sliders");
+  sliderGridBtn.position(190, 5);
+  // sliderGridBtn.hide();
+  
+  sliderGridBtn.mousePressed(function() {
+    sliderGridBtn.hide();
+    mouseCoordButton.show();
+    mouseCoord_bo = true;
+  });
 
-        h = p.map(p.sin(angle), -1, 1, 1, 300);
+  // toggle number presentation or squares
+  numbersBtn  = createButton("numbers");
+  numbersBtn.position(260, 5);
+  numbersBtn.hide();
+  
+  numbersBtn.mousePressed(function() {
+    numbersBtn.hide();
+    squaresBtn.show();
+    numbersActiveToggle = true;
+  });
+  
+  squaresBtn = createButton("squares");
+  squaresBtn.position(260, 5);
+  // sliderGridBtn.hide();
+  
+  squaresBtn.mousePressed(function() {
+    squaresBtn.hide();
+    numbersBtn.show();
+    numbersActiveToggle = false;
+  });
 
-        //strokeWeight(h);
-        //stroke(h);
-        p.fill(h);
-
-        angle += 0.009;
 
 
-
-        //rect(0, 0, 20, h);
-        p.ellipse(h, -h, h);
-        p.ellipse(h, h, h);
-        p.ellipse(-h, h, h);
-        p.ellipse(-h, -h, h);
-
-    }
-}
-
-let myp5_2 = new p5(t, "c2");
-
-let x = function (p) {
-    let drops = [];
-
-    p.setup = function () {
-        p.createCanvas(500, 500);
-        //canvas.style('z-index', '-1');
-        for (var i = 0; i < 500; i++) {
-            drops[i] = new Drop();
-        }
-    }
-
-    p.draw = function () {
-        p.background(255);
-        for (var i = 0; i < drops.length; i++) {
-            drops[i].fall();
-            drops[i].show();
-        }
-    }
 
 }
 
-let myp5_3 = new p5(x, "c3");
+function draw() {
+  background(57, 50, 50);
+  fill(255);
+  stroke(255);
+  strokeWeight(0.9);
 
-function Drop () {
-    this.x = random(width);
-    this.y = random(-500, -50);
-    this.z = p.random(0, 2);
-    this.len = p.map(this.z, 0, 20, 10, 20);
-    this.yspeed = p.map(this.z, 0, 2, 1, 20);
+  text("cnt: " + cnt, 100, 40);
+  text("Width: " + gridWidthSlider.value(), 190, 55);
+  text("Height: " + gridHeightSlider.value(), 190, 75);
+  text("spacing: " + gridSpacingSlider.value(), 190, 95);
+  text("mouse y:" + mouseY, 30, 40);
   
-    this.fall = function() {
-      this.y = this.y + this.yspeed;
-      var grav = p.map(this.z, 0, 20, 0, 0.2);
-      this.yspeed = this.yspeed + grav;
-  
-      if (this.y > height) {
-        this.y = p.random(-200, -100);
-        this.yspeed = p.map(this.z, 0, 20, 4, 10);
-      }
-    };
-  
-    this.show = function() {
-      var thick = map(this.z, 0, 20, 1, 3);
-      strokeWeight(thick);
-      stroke(138, 43, 226);
-      line(this.x, this.y, this.x, this.y + this.len);
-    };
+
+  noFill();
+
+  if(lockActive)
+  {
+    fill(0, 100, 100);
+    stroke(0, 100, 100);
+
+    strokeWeight(1);
+    text("LOCKED ! ", 30, 15);
+
+    fill(0);
+    // stroke(200);
+    // rect(100, 100, 500, 500);
+    stroke(100, 100, 100);
   }
+  else
+  {
+
+    spacing = gridSpacingSlider.value();
+
+    if(mouseCoord_bo)
+    {
+      rec_x_amnt =  mouseX;
+      rec_y_amnt =  mouseY;
+    }
+    else
+    {
+      rec_x_amnt = gridWidthSlider.value();
+      rec_y_amnt = gridHeightSlider.value();
+    }
+
+    stroke(255);
+  }
+
+
+  // display tha grid
+  for(var x = 100; x < 100 + rec_x_amnt; x += spacing)
+  {
+    for(var y = 100; y < 100 + rec_y_amnt; y += spacing)
+    {
+      if(numbersActiveToggle)
+      {
+        rect(x, y, 10, 10);
+      }
+      else
+      {
+        text(heatMap.temps[floor((x-100)*(1/floor(rec_x_amnt/spacing)))][floor((y-100)*(1/floor(rec_y_amnt/spacing)))], x + 5, y + 9);
+        // text("hi", x + 5, y + 9);
+      }
+    }
+  }
+
+  for (let x = 0; x < rec_x_amnt; x++) {
+    element = rec_x_amnt;
+    
+  }
+
+}
+
+
+
+function mousePressed()
+{
+  if(mouseY > 100)
+  {
+    cnt += 1;
+    
+    if(lockActive)
+    {
+      lockActive = false;
+    }
+    else
+    {
+      lockActive = true;
+    }
+  }
+}
+
+
+
+// heatmap constructor
+var HeatMap = function(mapWidth, mapHeight) {
+  this.width = mapWidth;
+  this.height = mapHeight;
+  this.temps = [];
+  this.newTemps = [];
+
+  // initialize the temp at each point in the grid
+  for (var x = 0; x < this.width; x++) {
+    this.temps[x] = [];
+    this.newTemps[x] = [];
+    for (var y = 0; y < this.height; y++)
+      this.temps[x][y] = this.newTemps[x][y] = floor(random(0, 255));
+  }
+  console.log(this.temps);
+}
+
+
